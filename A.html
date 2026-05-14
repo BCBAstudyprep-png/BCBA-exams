@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BCBA Mini Mock — Section A</title>
+<style>
+  :root {
+    --purple: #4B2E83;
+    --purple-light: #F3EFFB;
+    --purple-mid: #9B7FCF;
+    --green: #2E7D32;
+    --green-light: #E8F5E9;
+    --gray: #595959;
+    --gray-light: #BFBFBF;
+    --bg: #FAF8FD;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: #1a1a1a;
+    line-height: 1.6;
+    margin: 0;
+    padding: 20px;
+    max-width: 820px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  header {
+    text-align: center;
+    padding: 30px 20px;
+    border-top: 4px solid var(--purple);
+    border-bottom: 4px solid var(--purple);
+    margin-bottom: 30px;
+  }
+  header h1 {
+    color: var(--purple);
+    margin: 0 0 8px 0;
+    font-size: 28px;
+  }
+  header .subtitle {
+    color: var(--purple);
+    font-weight: bold;
+    font-size: 18px;
+    margin: 4px 0;
+  }
+  header .tagline {
+    color: var(--gray);
+    font-style: italic;
+    font-size: 14px;
+  }
+  .instructions {
+    background: white;
+    border-left: 4px solid var(--purple);
+    padding: 16px 20px;
+    margin: 20px 0;
+    border-radius: 4px;
+  }
+  .toc {
+    background: var(--purple-light);
+    padding: 16px 24px;
+    border-radius: 8px;
+    margin: 20px 0;
+  }
+  .toc h3 {
+    color: var(--purple);
+    margin-top: 0;
+  }
+  .toc ul {
+    margin: 0;
+    padding-left: 20px;
+  }
+  .toc li {
+    margin: 6px 0;
+  }
+  h2.section-heading {
+    color: var(--purple);
+    border-bottom: 2px solid var(--purple);
+    padding-bottom: 6px;
+    margin-top: 50px;
+    font-size: 22px;
+  }
+  .question {
+    background: white;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin: 24px 0;
+    box-shadow: 0 1px 3px rgba(75, 46, 131, 0.06);
+  }
+  .question-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed var(--gray-light);
+  }
+  .question-number {
+    color: var(--purple);
+    font-weight: bold;
+    font-size: 18px;
+  }
+  .task-tag {
+    background: var(--purple-light);
+    color: var(--purple);
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    font-style: italic;
+  }
+  .stem {
+    margin: 12px 0 16px 0;
+    font-size: 15.5px;
+  }
+  .options {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .options li {
+    padding: 10px 14px;
+    margin: 6px 0;
+    background: #fafafa;
+    border-radius: 6px;
+    border: 1px solid #eee;
+    transition: background 0.15s;
+  }
+  .options li:hover {
+    background: var(--purple-light);
+    cursor: pointer;
+  }
+  .option-letter {
+    font-weight: bold;
+    color: var(--purple);
+    margin-right: 8px;
+  }
+  .answers-section {
+    margin-top: 60px;
+    padding-top: 30px;
+    border-top: 4px double var(--purple);
+  }
+  .answers-section > h2 {
+    text-align: center;
+    color: var(--purple);
+    font-size: 28px;
+    margin-bottom: 8px;
+  }
+  .answers-section > .answer-intro {
+    text-align: center;
+    color: var(--gray);
+    font-style: italic;
+    margin-bottom: 30px;
+  }
+  .answer {
+    background: white;
+    border-left: 4px solid var(--green);
+    padding: 16px 20px;
+    margin: 16px 0;
+    border-radius: 4px;
+  }
+  .answer-header {
+    color: var(--green);
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom: 8px;
+  }
+  .answer-correct {
+    background: var(--green-light);
+    padding: 10px 14px;
+    border-radius: 6px;
+    margin: 10px 0;
+    font-weight: 600;
+  }
+  .rationale-label {
+    color: var(--purple);
+    font-weight: bold;
+    margin-top: 12px;
+    margin-bottom: 4px;
+  }
+  .rationale {
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: #333;
+  }
+  .answer .task-tag {
+    margin-top: 10px;
+    display: inline-block;
+  }
+  .scoresheet {
+    margin-top: 50px;
+    background: var(--purple-light);
+    padding: 24px;
+    border-radius: 8px;
+  }
+  .scoresheet h3 {
+    color: var(--purple);
+    margin-top: 0;
+    text-align: center;
+  }
+  table.score {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  table.score th {
+    background: var(--purple);
+    color: white;
+    padding: 10px;
+    text-align: left;
+  }
+  table.score td {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+  }
+  table.score tr:last-child td {
+    background: var(--purple-light);
+    font-weight: bold;
+  }
+  .footer-note {
+    text-align: center;
+    color: var(--gray);
+    font-style: italic;
+    margin: 30px 0 10px 0;
+    font-size: 14px;
+  }
+  .controls {
+    position: sticky;
+    top: 10px;
+    text-align: right;
+    margin-bottom: 10px;
+    z-index: 10;
+  }
+  .controls button {
+    background: var(--purple);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 13px;
+  }
+  .controls button:hover { background: #3a2367; }
+  @media print {
+    .controls { display: none; }
+    body { background: white; }
+    .question, .answer { page-break-inside: avoid; }
+    .answers-section { page-break-before: always; }
+  }
+  @media (max-width: 600px) {
+    body { padding: 12px; }
+    header { padding: 20px 10px; }
+    header h1 { font-size: 22px; }
+    .question, .answer { padding: 14px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="controls">
+  <button onclick="window.print()">🖨️ Print / Save as PDF</button>
+</div>
+
+<header>
+  <h1>BCBA Mini Mock Exam</h1>
+  <div class="subtitle">25 Questions — Section A (Domain A)</div>
+  <div class="tagline">Behaviorism and Philosophical Foundations</div>
+  <div class="tagline">Aligned with the BCBA Test Content Outline, 6th Edition</div>
+</header>
+
+<div class="instructions">
+  <strong>Instructions:</strong> Answer all 25 multiple-choice questions in order. Each question is labeled with the specific Domain A task it addresses (A.1–A.5). When you finish, scroll to the bottom to check your answers and read the rationales. Use the score sheet to identify which tasks need more review.
+</div>
+
+<div class="toc">
+  <h3>Domain A — Task coverage</h3>
+  <ul>
+    <li><strong>A.1</strong> — Goals of behavior analysis (description, prediction, control): Questions 1–5</li>
+    <li><strong>A.2</strong> — Philosophical assumptions (selectionism, determinism, empiricism, parsimony, pragmatism): Questions 6–10</li>
+    <li><strong>A.3</strong> — Radical behaviorism: Questions 11–15</li>
+    <li><strong>A.4</strong> — Behaviorism vs. EAB vs. ABA vs. professional practice: Questions 16–20</li>
+    <li><strong>A.5</strong> — Seven dimensions of ABA: Questions 21–25</li>
+  </ul>
+  <p style="margin-bottom: 0; font-style: italic; color: var(--gray); font-size: 13px;">On the actual BCBA exam, Domain A accounts for 8 of 175 scored questions (~5%).</p>
+</div>
+
+<h2 class="section-heading">Questions</h2>
+
+<!-- ============== QUESTIONS (no answers visible) ============== -->
+
+<div class="question">
+  <div class="question-header">
+    <span class="question-number">Question 1</span>
+    <span class="task-tag">A.1 — Goals of behavior analysis</span>
+  </div>
+  <div class="stem">A behavior analyst conducts a functional analysis and determines that a learner's self-injurious behavior is maintained by escape from demands. She then arranges an intervention that systematically reduces SIB by teaching a functional communication response. Which of the three goals of behavior analysis as a science is BEST demonstrated by this final step?</div>
+  <ul class="options">
+    <li><span class="option-letter">A.</span> Description</li>
+    <li><span class="option-letter">B.</span> Prediction</li>
+    <li><span class="option-letter">C.</span> Control</li>
+    <li><span class="option-letter">D.</span> Replication</li>
+  </ul>
+</div>
+
+<div class="question">
+  <div class="question-header">
+    <span class="question-number">Question 2</span>
+    <span class="task-tag">A.1 — Goals of behavior analysis</span>
+  </div>
+  <div class="stem">A graduate student notes that a child's tantrums occur most often around 4:00 PM, after school, and just before snack time. She has not yet manipulated any variables, but she identifies a correlation between time of day, hunger, and tantrum frequency. Which goal of science has she achieved?</div>
+  <ul class="options">
+    <li><span class="option-letter">A.</span> Control</li>
+    <li><span class="option-letter">B.</span> Prediction</li>
+    <li><span class="option-letter">C.</span> Description</li>
+    <li><span class="option-letter">D.</span> Explanation</li>
+  </ul>
+</div>
+
+<div class="question">
+  <div class="question-header">
+    <span class="question-number">Question 3</span>
+    <span class="task-tag">A.1 — Goals of behavior analysis</span>
+  </div>
+  <div class="stem">A BCBA writes a detailed operational definition of a client's stereotypy and observes the behavior across multiple settings without intervening. At this stage, which goal of behavior analysis is being addressed?</div>
+  <ul class="options">
+    <li><span class="option-letter">A.</span> Prediction</li>
+    <li><span class="option-letter">B.</span> Description</li>
+    <li><span class="option-letter">C.</span> Control</li>
+    <li><span class="option-letter">D.</span> Verification</li>
+  </ul>
+</div>
+
+<div class="question">
+  <div class="question-header">
+    <span class="question-number">Question 4</span>
+    <span class="task-tag">A.1 — Goals of behavior analysis</span>
+  </div>
+  <div class="stem">Which of the following BEST demonstrates that the goal of control has been achieved in a behavior-analytic study?</div>
+  <ul class="options">
+    <li><span class="option-letter">A.</span> The researcher reliably identifies that a behavior occurs in the presence of a particular antecedent.</li>
+    <li><span class="option-letter">B.</span> The researcher describes the behavior in observable and measurable terms.</li>
+    <li><span class="option-letter">C.</span> The researcher manipulates an independent variable and produces systematic changes in the dependent variable.</li>
+    <li><span class="option-letter">D.</span> The researcher publishes findings in a peer-reviewed journal.</li>
+  </ul>
+</div>
+
+<div class="question">
+  <div class="question-header">
+    <span class="question-number">Question 5</span>
+    <span class="task-tag">A.1 — Goals of behavior analysis</span>
+  </div>
+  <div class="stem">A behavior analyst states, "If I provide a 10-minute pre-session run, problem behavior during academic instruction is likely to decrease." Which goal of behavior analysis does this statement reflect, given that no manipulation has yet occurred?</div>
+  <ul class="options">
+    <li><span class="option-letter">A.</span> Description</li>
+    <li><span class="option-letter">B.</span> Prediction</li>
+    <li><span class="option-letter">C.</span> Control</li>
+    <li><span class="option-letter">D.</span> Pragmatism</li>
+  </ul>
+</div>
+
+<div class="question">
+  <div class="question-header">
+    <span class="question-number">Question 6</span>
+    <span class="task-tag">A.2 — Philosophical assumptions</span>
+  </div>
+  <div class="stem">A behavior analyst explains to a parent: "Behavior, like physical traits, is shaped over time by its consequences. Responses that are reinforced tend to be repeated; those that are not, tend to drop out." This explanation MOST closely reflects which philosophical assumption?</div>
+  <ul class="options">
+    <li><span class="option-letter">A.</span> Determinism</li>
+    <li><span class="option-letter">B.</span> Parsimony</li>
+    <li><span class="option-letter">C.</span> Selectionism</li>
+    <li><span class="option-letter">D.</span> Empiricism</li>
+  </ul>
+</div>
+
+<div class="question">
+  <div class="question-header">
+    <span class="question-number">Question 7</span>
+    <span class="task-tag">A.2 — Philosophical assumptions</span>
+  </div>
+  <div class="stem">A BCBA insists on choosing the simplest interpretation that adequately accounts for the data before considering more complex or unobserved explanations. Which philosophical assumption is the BCBA applying?</div>
+  <ul class="options">
+    <li><span class="option-letter">A.</span> Empiricism</li>
+    <li><span class="option-letter">B.</span> Parsimony</li>
+    <li><span class="option-letter">C.</span> Pragmatism</li>
+    <li><span class="option-letter">D.</span> Determinism</li>
+  </ul>
+</div>
+
+<div class="question">
+  <div class="question-header">
+    <span class="question-number">Question 8</span>
+    <span class="task-tag">A.2 — Philosophical assumptions</span>
+  </div>
+  <div class="stem">A researcher believes that behavior is a lawful and orderly phenomenon, and that events occur as a result of identifiable, causal variables rather than by chance. Which philosophical assumption underlies this view?</div>
+  <ul class="options">
+    <li><span class="option-letter">A.</span> Selectionism</li>
+    <li><span class="option-letter">B.</span> Empiricism</li>
+    <li><span class="option-letter">C.</span> Determinism</li>
+    <li><span class="option-letter">D.</span> Pragmatism</li>
+  </ul>
+</div>
+
+<div class="question">
+  <div class="question-header">
+    <span class="question-number">Question 9</span>
+    <span class="task-tag">A.2 — Philosophical assumptions</span>
+  </div>
+  <div class="stem">A behavior analyst relies primarily on systematic, objective observation and measurement of behavior rather than on introspection, opinion, or anecdotal report. Which philosophical assumption is being demonstrated?</div>
+  <ul class="options">
+    <li><span class="option-letter">A.</span> Empiricism</li>
+    <li><span class="option-letter">B.</span> Pragmatism</li>
+    <li><span class="option-letter">C.</span> Parsimony</li>
+    <li><span class="option-letter">D.</span> Selectionism</li>
+  </ul>
+</div>
+
+<div class="question">
+  <div class="question-header">
+    <span class="question-number">Question 10</span>
+    <span class="task-tag">A.2 — Philosophical assumptions</span>
+  </div>
+  <div class="stem">A behavior analyst evaluates whether a theory or concept is useful primarily by whether it works — whether it produces effective prediction and control of behavior. Which philosophical assumption is being applied?</div>
+  <ul class="options">
+    <li><span class="option-letter">A.</span> Selectionism</li>
+    <li><span class="option-letter">B.</span> Determinism</li>
+    <li><span class="option-letter">C.</span> Empiricism</li>
+    <li><span class="option-letter">D.</span> Pragmatism</li>
+  </ul>
+</div>
+
+<div class="question">
+  <div class="question-header">
+    <span class="question-number">Question 11</span>
+    <span class="task-tag">A.3 — Radical behaviorism</span>
+  </div>
+  <div class="stem">A behavior analyst explains that thinking, feeling, and remembering are forms of behavior that obey the same principles as observable behavior, even though they are accessible only to the individual experiencing them. This view BEST reflects which philosophical position?</div>
+  <ul class="options">
+    <li><span class="option-letter">A.</span> Methodological behaviorism</li>
+    <li><span class="option-letter">B.</span> Radical behaviorism</li>
+    <li><span class="option-letter">C.</span> Mentalism</li>
+    <li><span class="option-letter">D.</span> Structuralism</li>
+  </ul>
+</div>
+
+<div class="question">
+  <div class="question-header">
+    <span class="question-number">Question 12</span>
+    <span class="task-tag">A.3 — Radical behaviorism</span>
+  </div>
+  <div class="stem">Which of the following is the PRIMARY difference between radical behaviorism and methodological behaviorism?</div>
+  <ul class="options">
+    <li><span class="option-letter">A.</span> Radical behaviorism rejects determinism, while methodological behaviorism accepts it.</li>
+    <li><span class="option-letter">B.</span> Radical behaviorism includes private events as part of the subject matter of behavior analysis.</li>
+    <li><span class="option-letter">C.</span> Methodological behaviorism studies operant behavior, while radical behaviorism does not.</li>
+    <li><span class="option-letter">D.</span> Methodological behaviorism includes private events; radical behaviorism does not.</li>
+  </ul>
+</div>
+
+<div class="question">
+  <div class="question-header">
+    <span class="question-number">Question 13</span>
+    <span class="task-tag">A.3 — Radical behaviorism</span>
+  </div>
+  <div class="stem">Within radical behaviorism, a client's report "I felt anxious before the test" is BEST understood as:</div>
+  <ul class="options">
+    <li><span class="option-letter">A.</span> An unscientific statement that should be ignored.</li>
+    <li><span class="option-letter">B.</span> Evidence of an inner mental state that causes behavior.</li>
+    <li><span class="option-letter">C.</span> A verbal response describing a private event that is itself behavior.</li>
+    <li><span class="option-letter">D.</span> A spontaneous reaction unrelated to environmental contingencies.</li>
+  </ul>
+</div>
+
+<div class="question">
+  <div class="question-header">
+    <span class="question-number">Question 14</span>
+    <span class="task-tag">A.3 — Radical behaviorism</span>
+  </div>
+  <div class="stem">A clinician argues that a child's aggression is caused by an "underlying anger problem" that resides within the child. A radical behaviorist would MOST likely critique this explanation by noting that it:</div>
+  <ul class="options">
+    <li><span class="option-letter">A.</span> Fails to use the scientific method.</li>
+    <li><span class="option-letter">B.</span> Is an example of explanatory fiction that does not identify environmental variables controlling the behavior.</li>
+    <li><span class="option-letter">C.</span> Violates the principle of empiricism by relying on observation.</li>
+    <li><span class="option-letter">D.</span> Is consistent with the philosophical assumption of selectionism.</li>
+  </ul>
+</div>
+
+<div class="question">
+  <div class="question-header">
+    <span class="question-number">Question 15</span>
+    <span class="task-tag">A.3 — Radical behaviorism</span>
+  </div>
+  <div class="stem">Which statement is MOST consistent with radical behaviorism?</div>
+  <ul class="options">
+    <li><span class="option-letter">A.</span> Private events should not be studied because they cannot be measured.</li>
+    <li><span class="option-letter">B.</span> Behavior is best explained by hypothetical constructs such as the ego or self.</li>
+    <li><span class="option-letter">C.</span> Both public and private events are behavior and can be analyzed using the same principles.</li>
+    <li><span class="option-letter">D.</span> Only behavior that can be reliably measured by two observers qualifies as scientific data.</li>
+  </ul>
+</div>
+
+<div class="question">
+  <div class="question-header">
+    <span class="question-number">Question 16</span>
+    <span class="task-tag">A.4 — Branches of behavior analysis</span>
+  </div>
+  <div class="stem">A scientist studies operant behavior in pigeons under tightly controlled laboratory conditions to investigate fundamental relations between schedules of reinforcement and response rates. This work is BEST described as:</div>
+  <ul class="options">
+    <li><span class="option-letter">A.</span> Behaviorism</li>
+    <li><span class="option-letter">B.</span> The experimental analysis of behavior (EAB)</li>
+    <li><span class="option-letter">C.</span> Applied behavior analysis (ABA)</li>
+    <li><span class="option-letter">D.</span> Professional practice guided by the science of behavior analysis</li>
+  </ul>
+</div>
+
+<div class="question">
+  <div class="question-header">
+    <span class="question-number">Question 17</span>
+    <span class="task-tag">A.4 — Branches of behavior analysis</span>
+  </div>
+  <div class="stem">A behavior analyst designs an intervention to teach a child with autism to request preferred items using vocal language, then measures progress and adjusts the procedure based on data. This work is BEST described as:</div>
+  <ul class="options">
+    <li><span class="option-letter">A.</span> Behaviorism</li>
+    <li><span class="option-letter">B.</span> EAB</li>
+    <li><span class="option-letter">C.</span> Applied behavior analysis</li>
+    <li><span class="option-letter">D.</span> Radical behaviorism</li>
+  </ul>
+</div>
+
+<div class="question">
+  <div class="question-header">
+    <span class="question-number">Question 18</span>
+    <span class="task-tag">A.4 — Branches of behavior analysis</span>
+  </div>
+  <div class="stem">Which of the following BEST describes the philosophy of the science of behavior, distinct from the science itself?</div>
+  <ul class="options">
+    <li><span class="option-letter">A.</span> Behaviorism</li>
+    <li><span class="option-letter">B.</span> EAB</li>
+    <li><span class="option-letter">C.</span> ABA</li>
+    <li><span class="option-letter">D.</span> Behavioral service delivery</li>
+  </ul>
+</div>
+
+<div class="question">
+  <div class="question-header">
+    <span class="question-number">Question 19</span>
+    <span class="task-tag">A.4 — Branches of behavior analysis</span>
+  </div>
+  <div class="stem">A BCBA who runs an in-home ABA program, supervises RBTs, and writes treatment plans for clients is engaged primarily in:</div>
+  <ul class="options">
+    <li><span class="option-letter">A.</span> Behaviorism</li>
+    <li><span class="option-letter">B.</span> The experimental analysis of behavior</li>
+    <li><span class="option-letter">C.</span> Applied behavior analysis as a research discipline</li>
+    <li><span class="option-letter">D.</span> Professional practice guided by the science of behavior analysis</li>
+  </ul>
+</div>
+
+<div class="question">
+  <div class="question-header">
+    <span class="question-number">Question 20</span>
+    <span class="task-tag">A.4 — Branches of behavior analysis</span>
+  </div>
+  <div class="stem">Which sequence correctly describes the relationship among the four branches in order of moving from foundational philosophy to direct service delivery?</div>
+  <ul class="options">
+    <li><span class="option-letter">A.</span> ABA → EAB → behaviorism → practice</li>
+    <li><span class="option-letter">B.</span> Behaviorism → EAB → ABA → professional practice</li>
+    <li><span class="option-letter">C.</span> EAB → behaviorism → practice → ABA</li>
+    <li><span class="option-letter">D.</span> Practice → ABA → EAB → behaviorism</li>
+  </ul>
+</div>
+
+<div class="question">
+  <div class="question-header">
+    <span class="question-number">Question 21</span>
+    <span class="task-tag">A.5 — Dimensions of ABA</span>
+  </div>
+  <div class="stem">Baer, Wolf, and Risley (1968) identified seven dimensions of applied behavior analysis. Which dimension requires that the behaviors selected for change be socially significant to the participants and their community?</div>
+  <ul class="options">
+    <li><span class="option-letter">A.</span> Behavioral</li>
+    <li><span class="option-letter">B.</span> Applied</li>
+    <li><span class="option-letter">C.</span> Effective</li>
+    <li><span class="option-letter">D.</span> Generality</li>
+  </ul>
+</div>
+
+<div class="question">
+  <div class="question-header">
+    <span class="question-number">Question 22</span>
+    <span class="task-tag">A.5 — Dimensions of ABA</span>
+  </div>
+  <div class="stem">A BCBA writes a procedure in such detail that another behavior analyst with similar training could read it and replicate the intervention exactly. Which dimension of ABA is being demonstrated?</div>
+  <ul class="options">
+    <li><span class="option-letter">A.</span> Technological</li>
+    <li><span class="option-letter">B.</span> Conceptually systematic</li>
+    <li><span class="option-letter">C.</span> Effective</li>
+    <li><span class="option-letter">D.</span> Generality</li>
+  </ul>
+</div>
+
+<div class="question">
+  <div class="question-header">
+    <span class="question-number">Question 23</span>
+    <span class="task-tag">A.5 — Dimensions of ABA</span>
+  </div>
+  <div class="stem">An article describes an intervention as "using token reinforcement on a fixed-ratio schedule to differentially reinforce alternative behavior, with stimulus control transferred through prompt fading." The procedures are clearly linked to the basic principles of behavior. Which dimension does this MOST closely reflect?</div>
+  <ul class="options">
+    <li><span class="option-letter">A.</span> Technological</li>
+    <li><span class="option-letter">B.</span> Applied</li>
+    <li><span class="option-letter">C.</span> Conceptually systematic</li>
+    <li><span class="option-letter">D.</span> Analytic</li>
+  </ul>
+</div>
+
+<div class="question">
+  <div class="question-header">
+    <span class="question-number">Question 24</span>
+    <span class="task-tag">A.5 — Dimensions of ABA</span>
+  </div>
+  <div class="stem">A learner is taught to greet adults in the clinic, and the behavior is later observed to occur with adults at school, at the grocery store, and at home — and continues several months after intervention ended. This BEST illustrates which dimension of ABA?</div>
+  <ul class="options">
+    <li><span class="option-letter">A.</span> Effective</li>
+    <li><span class="option-letter">B.</span> Generality</li>
+    <li><span class="option-letter">C.</span> Applied</li>
+    <li><span class="option-letter">D.</span> Conceptually systematic</li>
+  </ul>
+</div>
+
+<div class="question">
+  <div class="question-header">
+    <span class="question-number">Question 25</span>
+    <span class="task-tag">A.5 — Dimensions of ABA</span>
+  </div>
+  <div class="stem">Which of the following lists contains ONLY the seven dimensions of ABA as identified by Baer, Wolf, and Risley (1968)?</div>
+  <ul class="options">
+    <li><span class="option-letter">A.</span> Applied, behavioral, analytic, technological, conceptually systematic, effective, generality</li>
+    <li><span class="option-letter">B.</span> Applied, observable, measurable, replicable, effective, ethical, generalizable</li>
+    <li><span class="option-letter">C.</span> Behaviorism, EAB, ABA, practice, applied, effective, analytic</li>
+    <li><span class="option-letter">D.</span> Description, prediction, control, parsimony, determinism, empiricism, pragmatism</li>
+  </ul>
+</div>
+
+<!-- ============== ANSWER KEY ============== -->
+<div class="answers-section">
+  <h2>Answer Key & Rationales</h2>
+  <p class="answer-intro">Scroll through to check your answers. The task each question covers is shown beneath the rationale.</p>
+
+  <div class="answer">
+    <div class="answer-header">Question 1</div>
+    <div class="answer-correct">Correct Answer: C. Control</div>
+    <div class="rationale-label">Rationale</div>
+    <div class="rationale">Behavior analysis has three goals: description (what occurred), prediction (when/where it is likely to occur again), and control (demonstrating a functional relation by manipulating variables to change behavior). Arranging an intervention that systematically changes behavior is the goal of control. Replication is a feature of single-case experimental design, not one of the three scientific goals.</div>
+    <span class="task-tag">A.1 — Goals of behavior analysis</span>
+  </div>
+
+  <div class="answer">
+    <div class="answer-header">Question 2</div>
+    <div class="answer-correct">Correct Answer: B. Prediction</div>
+    <div class="rationale-label">Rationale</div>
+    <div class="rationale">Identifying a reliable correlation between events allows the analyst to predict when behavior is more likely to occur — but no variable has yet been manipulated, so control has not been demonstrated. Description involves recording the topography and circumstances of behavior; prediction involves identifying lawful relations between events that allow forecasting.</div>
+    <span class="task-tag">A.1 — Goals of behavior analysis</span>
+  </div>
+
+  <div class="answer">
+    <div class="answer-header">Question 3</div>
+    <div class="answer-correct">Correct Answer: B. Description</div>
+    <div class="rationale-label">Rationale</div>
+    <div class="rationale">Description involves the systematic observation and recording of behavior, including operational definitions and the conditions under which behavior occurs. No correlations or functional relations have been demonstrated yet, so prediction and control have not been achieved.</div>
+    <span class="task-tag">A.1 — Goals of behavior analysis</span>
+  </div>
+
+  <div class="answer">
+    <div class="answer-header">Question 4</div>
+    <div class="answer-correct">Correct Answer: C. The researcher manipulates an independent variable and produces systematic changes in the dependent variable.</div>
+    <div class="rationale-label">Rationale</div>
+    <div class="rationale">Control is demonstrated when the systematic manipulation of an independent variable reliably produces a change in the dependent variable, establishing a functional relation. Identifying antecedent-behavior correlations is prediction; operationally defining behavior is description.</div>
+    <span class="task-tag">A.1 — Goals of behavior analysis</span>
+  </div>
+
+  <div class="answer">
+    <div class="answer-header">Question 5</div>
+    <div class="answer-correct">Correct Answer: B. Prediction</div>
+    <div class="rationale-label">Rationale</div>
+    <div class="rationale">The statement forecasts behavior based on an antecedent manipulation but does not represent that the manipulation has been done. Forecasting future behavior based on identified relations is prediction. Control would require actually implementing the run and demonstrating a systematic change.</div>
+    <span class="task-tag">A.1 — Goals of behavior analysis</span>
+  </div>
+
+  <div class="answer">
+    <div class="answer-header">Question 6</div>
+    <div class="answer-correct">Correct Answer: C. Selectionism</div>
+    <div class="rationale-label">Rationale</div>
+    <div class="rationale">Selectionism is the assumption that behavior, like biological traits, is selected by its consequences over time — at the levels of phylogeny (species), ontogeny (individual learning), and cultural practices. The analogy to natural selection is the hallmark of selectionism.</div>
+    <span class="task-tag">A.2 — Philosophical assumptions</span>
+  </div>
+
+  <div class="answer">
+    <div class="answer-header">Question 7</div>
+    <div class="answer-correct">Correct Answer: B. Parsimony</div>
+    <div class="rationale-label">Rationale</div>
+    <div class="rationale">Parsimony (also called the law of parsimony or Occam's razor) is the assumption that all simple, logical explanations of a phenomenon should be ruled out before more complex, hypothetical, or mentalistic explanations are considered.</div>
+    <span class="task-tag">A.2 — Philosophical assumptions</span>
+  </div>
+
+  <div class="answer">
+    <div class="answer-header">Question 8</div>
+    <div class="answer-correct">Correct Answer: C. Determinism</div>
+    <div class="rationale-label">Rationale</div>
+    <div class="rationale">Determinism is the assumption that the universe is lawful and orderly — events (including behavior) do not occur randomly but are the product of identifiable causes. Without determinism, science could not exist, because phenomena could not be predicted or controlled.</div>
+    <span class="task-tag">A.2 — Philosophical assumptions</span>
+  </div>
+
+  <div class="answer">
+    <div class="answer-header">Question 9</div>
+    <div class="answer-correct">Correct Answer: A. Empiricism</div>
+    <div class="rationale-label">Rationale</div>
+    <div class="rationale">Empiricism is the practice of objective observation and measurement of phenomena. Behavior analysis is empirical because it depends on direct, repeatable measurement of observable behavior rather than on opinion, intuition, or introspection.</div>
+    <span class="task-tag">A.2 — Philosophical assumptions</span>
+  </div>
+
+  <div class="answer">
+    <div class="answer-header">Question 10</div>
+    <div class="answer-correct">Correct Answer: D. Pragmatism</div>
+    <div class="rationale-label">Rationale</div>
+    <div class="rationale">Pragmatism is the assumption that the truth or value of a concept is judged by how well it works in producing the desired outcomes — for behavior analysis, prediction and control of behavior. A theory that does not lead to effective action has little pragmatic value.</div>
+    <span class="task-tag">A.2 — Philosophical assumptions</span>
+  </div>
+
+  <div class="answer">
+    <div class="answer-header">Question 11</div>
+    <div class="answer-correct">Correct Answer: B. Radical behaviorism</div>
+    <div class="rationale-label">Rationale</div>
+    <div class="rationale">Radical behaviorism, articulated by Skinner, holds that private events (thoughts, feelings, sensations) are behavior — they are subject to the same principles as public behavior and are appropriate subject matter for a science of behavior. Methodological behaviorism rejects private events as legitimate scientific data because they cannot be objectively observed.</div>
+    <span class="task-tag">A.3 — Radical behaviorism</span>
+  </div>
+
+  <div class="answer">
+    <div class="answer-header">Question 12</div>
+    <div class="answer-correct">Correct Answer: B. Radical behaviorism includes private events as part of the subject matter of behavior analysis.</div>
+    <div class="rationale-label">Rationale</div>
+    <div class="rationale">Methodological behaviorism considers only publicly observable behavior to be the legitimate subject matter of science, treating private events as outside its scope. Radical behaviorism extends behavior analysis to private events (thoughts, feelings, sensations), treating them as behavior subject to the same principles — though they cannot be directly observed by others.</div>
+    <span class="task-tag">A.3 — Radical behaviorism</span>
+  </div>
+
+  <div class="answer">
+    <div class="answer-header">Question 13</div>
+    <div class="answer-correct">Correct Answer: C. A verbal response describing a private event that is itself behavior.</div>
+    <div class="rationale-label">Rationale</div>
+    <div class="rationale">From a radical behaviorist perspective, the report is a verbal response (a tact of a private event). The private state itself — felt anxiety — is also behavior, controlled by environmental and physiological variables. Radical behaviorism does not treat private events as inner causes; it treats them as behavior to be explained, not as explanations themselves.</div>
+    <span class="task-tag">A.3 — Radical behaviorism</span>
+  </div>
+
+  <div class="answer">
+    <div class="answer-header">Question 14</div>
+    <div class="answer-correct">Correct Answer: B. Is an example of explanatory fiction that does not identify environmental variables controlling the behavior.</div>
+    <div class="rationale-label">Rationale</div>
+    <div class="rationale">Radical behaviorism rejects mentalistic explanations that posit inner agents or hypothetical constructs (an "anger problem") as causes of behavior. These are explanatory fictions: they appear to explain but actually just rename the behavior and obscure the environmental variables responsible. The behavior analyst looks for environmental variables (antecedents and consequences) that account for the behavior.</div>
+    <span class="task-tag">A.3 — Radical behaviorism</span>
+  </div>
+
+  <div class="answer">
+    <div class="answer-header">Question 15</div>
+    <div class="answer-correct">Correct Answer: C. Both public and private events are behavior and can be analyzed using the same principles.</div>
+    <div class="rationale-label">Rationale</div>
+    <div class="rationale">A defining feature of radical behaviorism is that it does not draw a fundamental distinction between public behavior and private events. Both are behavior; both are functions of environmental variables and learning history; both can be analyzed using the same principles. Option D describes methodological behaviorism.</div>
+    <span class="task-tag">A.3 — Radical behaviorism</span>
+  </div>
+
+  <div class="answer">
+    <div class="answer-header">Question 16</div>
+    <div class="answer-correct">Correct Answer: B. The experimental analysis of behavior (EAB)</div>
+    <div class="rationale-label">Rationale</div>
+    <div class="rationale">The experimental analysis of behavior (EAB) is the basic-research branch of behavior analysis. It investigates fundamental behavioral processes, often in laboratory settings with non-human subjects, to identify basic principles. Behaviorism is the philosophy of the science; ABA applies the principles to socially significant behaviors; practice involves direct service delivery.</div>
+    <span class="task-tag">A.4 — Branches of behavior analysis</span>
+  </div>
+
+  <div class="answer">
+    <div class="answer-header">Question 17</div>
+    <div class="answer-correct">Correct Answer: C. Applied behavior analysis</div>
+    <div class="rationale-label">Rationale</div>
+    <div class="rationale">Applied behavior analysis (ABA) is the branch of behavior analysis that applies the principles derived from EAB to behaviors of social significance, using research methods to improve socially important behavior. Teaching functional communication to a child with autism is a classic example of applied behavior-analytic research and intervention.</div>
+    <span class="task-tag">A.4 — Branches of behavior analysis</span>
+  </div>
+
+  <div class="answer">
+    <div class="answer-header">Question 18</div>
+    <div class="answer-correct">Correct Answer: A. Behaviorism</div>
+    <div class="rationale-label">Rationale</div>
+    <div class="rationale">Behaviorism is the philosophy of the science of behavior — its underlying assumptions, goals, and worldview. EAB is the basic-research branch, ABA is the applied-research and intervention branch, and professional practice involves delivering services to consumers.</div>
+    <span class="task-tag">A.4 — Branches of behavior analysis</span>
+  </div>
+
+  <div class="answer">
+    <div class="answer-header">Question 19</div>
+    <div class="answer-correct">Correct Answer: D. Professional practice guided by the science of behavior analysis</div>
+    <div class="rationale-label">Rationale</div>
+    <div class="rationale">Professional practice involves delivering behavior-analytic services to clients, applying the principles and procedures derived from EAB and ABA. While ABA as a research discipline involves the systematic study of socially significant behavior, day-to-day service delivery (treatment planning, supervision, intervention) is best described as practice guided by the science.</div>
+    <span class="task-tag">A.4 — Branches of behavior analysis</span>
+  </div>
+
+  <div class="answer">
+    <div class="answer-header">Question 20</div>
+    <div class="answer-correct">Correct Answer: B. Behaviorism → EAB → ABA → professional practice</div>
+    <div class="rationale-label">Rationale</div>
+    <div class="rationale">Behaviorism is the philosophy underlying the science. EAB is the basic-research branch that identifies fundamental principles. ABA applies those principles to socially significant behavior through research. Professional practice delivers those evidence-based procedures to consumers. The flow is from philosophy to basic science to applied science to practice.</div>
+    <span class="task-tag">A.4 — Branches of behavior analysis</span>
+  </div>
+
+  <div class="answer">
+    <div class="answer-header">Question 21</div>
+    <div class="answer-correct">Correct Answer: B. Applied</div>
+    <div class="rationale-label">Rationale</div>
+    <div class="rationale">The applied dimension means the behaviors selected for change must be socially significant to the participants — important to the individual's quality of life, not merely of theoretical interest. This dimension is what distinguishes ABA from EAB.</div>
+    <span class="task-tag">A.5 — Dimensions of ABA</span>
+  </div>
+
+  <div class="answer">
+    <div class="answer-header">Question 22</div>
+    <div class="answer-correct">Correct Answer: A. Technological</div>
+    <div class="rationale-label">Rationale</div>
+    <div class="rationale">The technological dimension means that all procedures used in a study or intervention are identified and described with sufficient detail and clarity that a competent reader could replicate them. If steps are missing or vague, the procedure is not technological.</div>
+    <span class="task-tag">A.5 — Dimensions of ABA</span>
+  </div>
+
+  <div class="answer">
+    <div class="answer-header">Question 23</div>
+    <div class="answer-correct">Correct Answer: C. Conceptually systematic</div>
+    <div class="rationale-label">Rationale</div>
+    <div class="rationale">Conceptually systematic means that interventions and procedures are described in terms of the basic principles of behavior from which they were derived (reinforcement, stimulus control, extinction, etc.). This dimension links applied practice to its scientific foundations and helps generalize findings across cases.</div>
+    <span class="task-tag">A.5 — Dimensions of ABA</span>
+  </div>
+
+  <div class="answer">
+    <div class="answer-header">Question 24</div>
+    <div class="answer-correct">Correct Answer: B. Generality</div>
+    <div class="rationale-label">Rationale</div>
+    <div class="rationale">Generality means behavior change should last over time (maintenance), appear in environments other than where it was trained (setting/stimulus generalization), and spread to related behaviors (response generalization). Greeting adults across settings and over time exemplifies all of these.</div>
+    <span class="task-tag">A.5 — Dimensions of ABA</span>
+  </div>
+
+  <div class="answer">
+    <div class="answer-header">Question 25</div>
+    <div class="answer-correct">Correct Answer: A. Applied, behavioral, analytic, technological, conceptually systematic, effective, generality</div>
+    <div class="rationale-label">Rationale</div>
+    <div class="rationale">The seven dimensions are: applied, behavioral, analytic, technological, conceptually systematic, effective, and generality. Option D lists the goals and philosophical assumptions; option C confuses dimensions with the branches of behavior analysis.</div>
+    <span class="task-tag">A.5 — Dimensions of ABA</span>
+  </div>
+
+  <div class="scoresheet">
+    <h3>Score Sheet</h3>
+    <table class="score">
+      <thead>
+        <tr><th>Task</th><th>Questions</th><th>Correct</th><th>Total</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>A.1 — Goals of behavior analysis</td><td>1–5</td><td>____</td><td>5</td></tr>
+        <tr><td>A.2 — Philosophical assumptions</td><td>6–10</td><td>____</td><td>5</td></tr>
+        <tr><td>A.3 — Radical behaviorism</td><td>11–15</td><td>____</td><td>5</td></tr>
+        <tr><td>A.4 — Branches of behavior analysis</td><td>16–20</td><td>____</td><td>5</td></tr>
+        <tr><td>A.5 — Seven dimensions of ABA</td><td>21–25</td><td>____</td><td>5</td></tr>
+        <tr><td>TOTAL</td><td>1–25</td><td>____</td><td>25</td></tr>
+      </tbody>
+    </table>
+    <p class="footer-note">Aim for 80%+ (20/25) on Domain A before sitting the full exam.</p>
+  </div>
+</div>
+
+</body>
+</html>
